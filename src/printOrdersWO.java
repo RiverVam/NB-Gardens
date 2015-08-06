@@ -199,5 +199,5 @@ public class printOrdersWO extends JFrame {
 			*/
 			
 			 
-}
-	}
+}//end main
+	}//end class
