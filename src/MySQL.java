@@ -5,29 +5,32 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
-public class MySQL {
+public  class MySQL {
 	
-	 static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-	 static final String DB_URL = "jdbc:mysql://localhost:3306/Local instance MySQL56";
+	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+	 static final String DB_URL = "jdbc:mysql://localhost/mydb";
 
 	 static final String USER = "root";
 	 static final String PASS = "netbuilder";
-
-	 
-		 public void accessBD() {
+	
+		 public static void accessBD() {
 			 Connection conn = null;
 			 Statement stmt = null;
+			 System.out.println("access db");
 			 try {
-			  Class.forName( "com.mysql.jdbc.Driver");
+			  Class.forName( JDBC_DRIVER);
 			  System.out.println("Connecting to database...");
-			  conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/Local instance MySQL56", "root", "netbuilder");
+			  conn = DriverManager.getConnection(DB_URL, USER, PASS);
 			 //Create
+			  /*
 			  System.out.println("Inserting records into the table...");
 			  stmt = conn.createStatement();
-			  String sql = "INSERT INTO Languages " + "VALUES (1, 'Java', 1992)";
+			  String sql = "INSERT INTO product(Name,Price,Warehouse_Location) " + "VALUES ('Green Gnome', '£19.99', 'shelf 2')";
+			  System.out.print(sql);
 			  stmt.executeUpdate(sql);
-			  System.out.println("Inserted records into the table...");
-
+			  System.out.println("\nInserted records into the table...");
+*/
+/*
 			  //Read
 			  System.out.println("Creating statement...");
 			  stmt = conn.createStatement();
@@ -46,11 +49,11 @@ public class MySQL {
 			  stmt = conn.createStatement();
 			  String sql3 = "UPDATE Languages " + "SET date = 1994 WHERE id in (1, 2)";
 			  stmt.executeUpdate(sql3);
-
+*/
 			  //Delete
 			  System.out.println("Creating statement...");
 			  stmt = conn.createStatement();
-			  String sql4 = "DELETE FROM Languages " + "WHERE id = 1";
+			  String sql4 = "DELETE FROM product " + "WHERE Product_ID != 1";
 			  stmt.executeUpdate(sql4);
 			  
 			  //Closing the connection
@@ -75,6 +78,8 @@ public class MySQL {
 				
 
 
-			 
-		 }
-}//end class
+		 
+		 
+}
+
+}
