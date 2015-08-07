@@ -4,8 +4,9 @@ import java.util.ArrayList;
 public class Order {
 
 	
-		int orderNumber;
+		private int orderNumber;
 		String orderStatus = "Waiting";
+		
 	//	String orderContents ;
 
 		ArrayList<item> itemsOnOrder;

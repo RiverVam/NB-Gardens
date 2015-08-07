@@ -27,6 +27,7 @@ public class printOrdersWO extends JFrame {
 		 private JLabel orderStatusLabel;
 		 private JPanel controlPanel;
 		 ArrayList<Order> listOfOrders;
+		 ArrayList<Order_Line> OrderResults;
 		// ArrayList<Order> orderStatus;
 		 ArrayList<item> listOfItems;
 		
@@ -35,12 +36,13 @@ public class printOrdersWO extends JFrame {
 		public printOrdersWO(){
 			prepareGUI();
 			showEvent();
-			MySQL.accessBD();
-			addItems();
+			OrderResults = MySQL.gettingOrders();
+			listOfOrders = MySQL.gettingOrderID();
+		//	addItems();
 			
 
 		}
-		
+		/*
 	private void addItems(){
 		 item itemYellowGnome, itemBlueGnome, itemGreenGnome;
 		 itemYellowGnome = new item("Yellow Gnome, ");
@@ -85,7 +87,7 @@ public class printOrdersWO extends JFrame {
 		  System.out.print( listOfOrders.get(userInput).getOrderStatus());
 		  }
 	}
-}
+}*/
 	
 		 private void prepareGUI() {
 			 mainFrame = new JFrame("Warehouse IMS");
@@ -131,8 +133,9 @@ public class printOrdersWO extends JFrame {
 			  
 			  	case "Show Orders":
 			  		
-				   for (int i=0; i<listOfOrders.size(); i++) {
+				  for (int i=0; i<listOfOrders.size(); i++) {
 					 //  statusLabel.setText("Order ID: "+listOfOrders.get(i).getOrderNumber());
+			  		
 					   JButton ChooseOrder = new  JButton("Order ID: "+listOfOrders.get(i).getOrderNumber()); 
 					   ChooseOrder.setActionCommand("Choose Order");
 					   ChooseOrder.addActionListener( new printOrder(i));
