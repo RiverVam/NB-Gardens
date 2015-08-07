@@ -18,15 +18,16 @@ public  class MySQL {
 	 	public static ArrayList<Order> gettingOrderID(){
 	 		Connection conn = null;
 			 Statement stmt = null;
-			 System.out.println("access db");
+			 System.out.println("(1)access db");
+			 ArrayList<Order> listOfOrders = new ArrayList<Order>() ;
 			 try {
 			  Class.forName( JDBC_DRIVER);
-			  System.out.println("Connecting to database...");
+			  System.out.println("(2)Connecting to database...");
 			  conn = DriverManager.getConnection(DB_URL, USER, PASS);
 			  
-			  ArrayList<Order> listOfOrders = new ArrayList<Order>() ;
+			 // ArrayList<Order> listOfOrders = new ArrayList<Order>() ;
 			  
-			  System.out.println("Creating statement...");
+			  System.out.println("(3)Creating statement...");
 			  stmt = conn.createStatement();
 			  String sql2 = "SELECT Order_ID FROM orders";
 			  ResultSet rs = stmt.executeQuery(sql2);
@@ -38,7 +39,7 @@ public  class MySQL {
 				listOfOrders.add(order);
 			  }
 			  rs.close();
-			  return listOfOrders;
+			 
 			  
 			 } catch (SQLException sqle) {
 				 sqle.printStackTrace();
@@ -56,18 +57,19 @@ public  class MySQL {
 				    se.printStackTrace();
 				   }
 				  }
-			 	return null;
+			 return listOfOrders;
 		 }
 			  
 	 	
 	 
-		 public static ArrayList<Order_Line> gettingOrders() {
+		 public static ArrayList<Order_Line> gettingOrders(int orderId) {
 			 Connection conn = null;
 			 Statement stmt = null;
-			 System.out.println("access db");
+			 System.out.println("(4)access db");
+			 ArrayList<Order_Line> OrderResults = new ArrayList<Order_Line>() ;
 			 try {
 			  Class.forName( JDBC_DRIVER);
-			  System.out.println("Connecting to database...");
+			  System.out.println("(5)Connecting to database...");
 			  conn = DriverManager.getConnection(DB_URL, USER, PASS);
 			 //Create
 			  /*
@@ -81,22 +83,22 @@ public  class MySQL {
 
 			  //Read
 			  
-			  ArrayList<Order_Line> OrderResults = new ArrayList<Order_Line>() ;
+			 // ArrayList<Order_Line> OrderResults = new ArrayList<Order_Line>() ;
 			  
-			  System.out.println("Creating statement...");
+			  System.out.println("(6)retreving products and quantity.");
 			  stmt = conn.createStatement();
-			  String sql2 = "SELECT Order_ID, Product_ID, Quantity FROM order_line";
+			  String sql2 = "SELECT Product_ID, Quantity FROM order_line WHERE Order_Id =" +orderId;
 			  ResultSet rs = stmt.executeQuery(sql2);
 			  while (rs.next()) {
 				Order_Line OrderIDResult = new Order_Line();
-			   OrderIDResult.setOrder_ID(rs.getInt("Order_ID"));
+			   //OrderIDResult.setOrder_ID(rs.getInt("Order_ID"));
 			   OrderIDResult.setProduct_Id(rs.getInt("Product_ID"));
 			   OrderIDResult.setQuantity(rs.getInt("Quantity"));
-			  // System.out.println("Order_ID: " + order + ", Product_ID: " + product + ", Quantity: " + quantity);
+			  //System.out.println("Order_ID: " +  + ", Product_ID: " + product + ", Quantity: " + quantity);
 			   OrderResults.add(OrderIDResult);
 			  }
 			  rs.close();
-			  return OrderResults;
+			  //return OrderResults;
 			  
 			 } catch (SQLException sqle) {
 				 sqle.printStackTrace();
@@ -114,7 +116,7 @@ public  class MySQL {
 				    se.printStackTrace();
 				   }
 				  }
-			 	return null;
+			 return OrderResults;
 		 }
 			  /*
 			  //Update

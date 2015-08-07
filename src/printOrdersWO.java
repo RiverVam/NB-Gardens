@@ -26,7 +26,7 @@ public class printOrdersWO extends JFrame {
 		 private JTextArea  itemTextArea;
 		 private JLabel orderStatusLabel;
 		 private JPanel controlPanel;
-		 ArrayList<Order> listOfOrders;
+		 ArrayList<Order> listOfOrders ;
 		 ArrayList<Order_Line> OrderResults;
 		// ArrayList<Order> orderStatus;
 		 ArrayList<item> listOfItems;
@@ -36,8 +36,10 @@ public class printOrdersWO extends JFrame {
 		public printOrdersWO(){
 			prepareGUI();
 			showEvent();
-			OrderResults = MySQL.gettingOrders();
-			listOfOrders = MySQL.gettingOrderID();
+			
+			listOfOrders = new ArrayList<Order>();
+			OrderResults = new ArrayList<Order_Line>();
+			
 		//	addItems();
 			
 
@@ -132,7 +134,7 @@ public class printOrdersWO extends JFrame {
 			  switch (command) {
 			  
 			  	case "Show Orders":
-			  		
+			  		listOfOrders = MySQL.gettingOrderID();
 				  for (int i=0; i<listOfOrders.size(); i++) {
 					 //  statusLabel.setText("Order ID: "+listOfOrders.get(i).getOrderNumber());
 			  		
@@ -161,10 +163,11 @@ public class printOrdersWO extends JFrame {
 				 }
 				 
 				 @Override
-				 public void actionPerformed (ActionEvent ae) {
+				 public void actionPerformed  (ActionEvent ae) {
 					 String output = "";
-					 for (int j=0; j<listOfOrders.get(orderId).getArraySize();j++){
-						 output += listOfOrders.get(orderId).getItemsOnOrder().get(j).getItemName()+"";
+					 OrderResults = MySQL.gettingOrders(orderId);
+					 for (int j=0; j<OrderResults.size();j++){
+						 output += "Prod"+OrderResults.get(j).getProduct_Id()+", Quant: "+OrderResults.get(j).getQuantity();
 						 
 					 }
 					 itemTextArea.setText("Order Number: "+orderId+": "+output);
