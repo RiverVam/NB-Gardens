@@ -39,7 +39,7 @@ public class printOrdersWO extends JFrame {
 			
 			listOfOrders = new ArrayList<Order>();
 			OrderResults = new ArrayList<Order_Line>();
-			
+			listOfItems = new ArrayList<item>();
 		
 			
 
@@ -48,15 +48,16 @@ public class printOrdersWO extends JFrame {
 	
 		 private void prepareGUI() {
 			 mainFrame = new JFrame("Warehouse IMS");
-			 mainFrame.setSize(600, 600);
+			 mainFrame.setSize(1500, 1500);
 			 mainFrame.setLayout(new GridLayout(3, 1));
 			 headerLabel = new JLabel("", JLabel.CENTER);
 			 itemTextArea = new JTextArea("");
 			 itemTextArea.setWrapStyleWord(true);
 			 itemTextArea.setLineWrap(true);
 			 itemTextArea.setSize(350, 200);
+			 
 			 //Changes the order from waiting to processing on button click
-			 orderStatusLabel = new JLabel("", JLabel.RIGHT);
+			 orderStatusLabel = new JLabel("sbgfjksdbkgj", JLabel.RIGHT);
 			 orderStatusLabel.setSize(100,100);
 			 mainFrame.addWindowListener(new WindowAdapter() {
 				  public void windowClosing(WindowEvent windowEvent)     {
@@ -120,6 +121,35 @@ public class printOrdersWO extends JFrame {
 						 
 				   }
 				   break;
+			 	case "Update Stock Levels":
+			  		listOfItems =MySQL.gettingProducts();
+			  		for (int i=000; i<listOfItems.size(); i++) {
+			  			JButton ChooseProduct = new  JButton(listOfItems.get(i).getItemName()); 
+			  			ChooseProduct.setActionCommand("Choose Product");
+			  			ChooseProduct.addActionListener( new updateStockLevel());
+							 controlPanel.add(ChooseProduct);
+							 mainFrame.setVisible(true);
+			  		}
+			  		break;
+			  	
+			  	case "Update Order Status":
+			  	
+			  		
+			  		
+			  		break;
+			  	
+			  	case "Cancel":
+			  		
+						   //System.exit(0);
+			  		controlPanel = new JPanel();
+					 controlPanel.setLayout(new FlowLayout());
+					 mainFrame.add(headerLabel);
+					 mainFrame.add(controlPanel);
+					 mainFrame.add(itemTextArea);
+					 mainFrame.add(orderStatusLabel);
+					 mainFrame.setVisible(true);
+					 
+			  		break;
 			   
 			  }
 
@@ -136,7 +166,7 @@ public class printOrdersWO extends JFrame {
 					 String output = "";
 					 OrderResults = MySQL.gettingOrders(orderId);
 					 for (int j=0; j<OrderResults.size();j++){
-						 output += "Product ID: "+OrderResults.get(j).getProduct_Id()+"Product Name:"+OrderResults.get(j).getProduct_Name()+", Porous Status: "+OrderResults.get(j).getPorous_Status()+", Quant: "+OrderResults.get(j).getQuantity()+", ";
+						 output += "\n-Product ID: "+OrderResults.get(j).getProduct_Id()+"\nProduct Name:"+OrderResults.get(j).getProduct_Name()+", \nPorous Status: "+OrderResults.get(j).getPorous_Status()+", \nQuant: "+OrderResults.get(j).getQuantity()+", \n";
 						 
 					 }
 					 itemTextArea.setText("Order Number: "+orderId+": "+output);
@@ -144,18 +174,15 @@ public class printOrdersWO extends JFrame {
 					 for (int j=0; j<listOfOrders.get(orderId).getArraySize();j++){
 					 orderStatusLabel.setText("Order Status:"+listOfOrders.get(orderId).getOrderStatus());
 					 
-				
-				 
-				 
 				 JButton ChangeOrderstatus = new JButton("Change Status to Processing");
-				 ChangeOrderstatus.setActionCommand("Choose Order");
+				 ChangeOrderstatus.setActionCommand("Change Status");
 				 ChangeOrderstatus.addActionListener( new changeStatus(j));
 					 controlPanel.add(ChangeOrderstatus);
 					 mainFrame.setVisible(true);
 					 
 					 }
 			 }
-				 
+			 
 				 private class changeStatus  implements ActionListener{
 					 int ChangeOrderstatus ;
 					 public changeStatus(int ChangeOrderstatus){
@@ -166,8 +193,28 @@ public class printOrdersWO extends JFrame {
 					 		listOfOrders.get(orderId).setOrderStatus("processing") ;
 					 	}
 				 	}
-				 }
-			
+				 }//end printOrder
 			 
-}//end action listener class
+			private class updateStockLevel implements ActionListener{
+				String productName;
+				//private JFrame UpdateFrame;
+				
+				public updateStockLevel(){
+				this.productName =productName;
+				/*	UpdateFrame = new JFrame("Update IMS");
+					UpdateFrame.setSize(500, 500);
+					UpdateFrame.setLayout(new GridLayout(3, 1));
+					/*UpdateQuantityTextArea = new JTextArea("Enter New Quantity: ");
+					 UpdateQuantityTextArea.setWrapStyleWord(true);
+					 UpdateQuantityTextArea.setLineWrap(true);
+					 UpdateQuantityTextArea.setSize(100, 100);
+					 */
+					}
+				@Override
+				 public void actionPerformed  (ActionEvent ae) {
+					private JTextArea  UpdateQuantityTextArea;
+				}
+			}
+			 
+}//end BCL class
 	}//end class

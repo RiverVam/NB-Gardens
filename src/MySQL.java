@@ -58,7 +58,7 @@ public  class MySQL {
 				   }
 				  }
 			 return listOfOrders;
-		 }
+		 }// end public static ArrayList<Order> gettingOrderID()
 			  
 	 	
 	 
@@ -125,6 +125,47 @@ public  class MySQL {
 				   }
 				  }
 			 return OrderResults;
-		 }
+		 }//End ArrayList<Order_Line> gettingOrders(int orderId)
+		 
+		 public static ArrayList<item> gettingProducts(){
+			 Connection conn = null;
+			 Statement stmt = null;
+			 System.out.println("(1)access db");
+			 ArrayList<item> listOfItems = new ArrayList<item>() ;
+			 try {
+			  Class.forName( JDBC_DRIVER);
+			  System.out.println("(2)Connecting to database...");
+			  conn = DriverManager.getConnection(DB_URL, USER, PASS);
+			   
+			  System.out.println("(3)Creating statement...");
+			  stmt = conn.createStatement();
+			  String sql2 = "SELECT Name FROM product";
+			  ResultSet rs = stmt.executeQuery(sql2);
+			  while (rs.next()) {
+				item  item = new item(rs.getString("Name"));
+				
 			  
+			  // System.out.println("Order_ID: " + order + ", Product_ID: " + product + ", Quantity: " + quantity);
+				listOfItems.add(item);
+			  }
+			  rs.close();
+			  
+			 } catch (SQLException sqle) {
+				 sqle.printStackTrace();
+				} catch (Exception e) {
+				 e.printStackTrace();
+				} finally {
+				 try {
+				  if (stmt != null)
+				   conn.close();
+				  } catch (SQLException se) { }
+				  try {
+				   if (conn != null)
+				    conn.close();
+				   } catch (SQLException se) {
+				    se.printStackTrace();
+				   }
+				  }
+			  return listOfItems;
+		 }
 }
