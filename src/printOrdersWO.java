@@ -48,7 +48,7 @@ public class printOrdersWO extends JFrame {
 	
 		 private void prepareGUI() {
 			 mainFrame = new JFrame("Warehouse IMS");
-			 mainFrame.setSize(500, 500);
+			 mainFrame.setSize(600, 600);
 			 mainFrame.setLayout(new GridLayout(3, 1));
 			 headerLabel = new JLabel("", JLabel.CENTER);
 			 itemTextArea = new JTextArea("");
@@ -72,13 +72,32 @@ public class printOrdersWO extends JFrame {
 				 mainFrame.setVisible(true);
 		 }
 		 private void showEvent() {
-			 headerLabel.setText("press button to show orders");
+			 headerLabel.setText("Press Appropriate Button");
 			 JButton ShowOrders = new  JButton("Show Orders");
+			 JButton UpdateStock =new JButton("Update Stock Levels");
+			 JButton UpdateOrderStatus = new JButton("Update Order Status");
+			 JButton Cancel =new JButton("Cancel");
 			 
 			 ShowOrders.setActionCommand("Show Orders");
-
+			 UpdateStock.setActionCommand("Update Stock Levels");
+			 UpdateOrderStatus.setActionCommand("Update Order Status");
+			 Cancel.setActionCommand("Cancel");
+			 
+			 
+			 
+			 
 			 ShowOrders.addActionListener( new BCL());
 			 controlPanel.add(ShowOrders);
+			 
+			 UpdateStock.addActionListener( new BCL());
+			 controlPanel.add(UpdateStock);
+			 
+			 UpdateOrderStatus.addActionListener( new BCL());
+			 controlPanel.add(UpdateOrderStatus);
+			 
+			 Cancel.addActionListener( new BCL());
+			 controlPanel.add(Cancel);
+			 
 			 mainFrame.setVisible(true);
 		 }
 		 private class BCL implements ActionListener {
@@ -87,7 +106,7 @@ public class printOrdersWO extends JFrame {
 			 public void actionPerformed (ActionEvent ae) {
 			  String command = ae.getActionCommand();
 			  switch (command) {
-			  
+			  // brings up order buttons
 			  	case "Show Orders":
 			  		listOfOrders = MySQL.gettingOrderID();
 				  for (int i=0; i<listOfOrders.size(); i++) {
@@ -100,10 +119,7 @@ public class printOrdersWO extends JFrame {
 						 mainFrame.setVisible(true);
 						 
 				   }
-				  
-						
-				  
-			   break;
+				   break;
 			   
 			  }
 
@@ -112,7 +128,7 @@ public class printOrdersWO extends JFrame {
 			 private class printOrder implements ActionListener{
 				 int orderId ;
 				 public printOrder(int orderId){
-					 this.orderId =orderId;
+					 this.orderId =orderId+1;
 				 }
 				 
 				 @Override
@@ -153,5 +169,5 @@ public class printOrdersWO extends JFrame {
 				 }
 			
 			 
-}//end main
+}//end action listener class
 	}//end class

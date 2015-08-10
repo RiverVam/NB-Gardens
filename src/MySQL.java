@@ -91,6 +91,7 @@ public  class MySQL {
 			  String sql2 = "SELECT p.Product_ID, p.Name,  ol.Product_ID, ol.Quantity, ol.Porous_Ware "
 			  		+ "FROM product p "
 			  		+ "JOIN order_line ol "
+			  		//uses the foreign key to link the two tables in the database
 			  		+ "ON p.Product_ID=ol.Product_ID"	  
 			  		+ " WHERE Order_Id =" +orderId;
 			  ResultSet rs = stmt.executeQuery(sql2);
