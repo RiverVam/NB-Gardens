@@ -87,13 +87,20 @@ public  class MySQL {
 			  
 			  System.out.println("(6)retreving products and quantity.");
 			  stmt = conn.createStatement();
-			  String sql2 = "SELECT Product_ID, Quantity FROM order_line WHERE Order_Id =" +orderId;
+			  // SQl statement that links 2 tables and gets order info
+			  String sql2 = "SELECT p.Product_ID, p.Name,  ol.Product_ID, ol.Quantity, ol.Porous_Ware "
+			  		+ "FROM product p "
+			  		+ "JOIN order_line ol "
+			  		+ "ON p.Product_ID=ol.Product_ID"	  
+			  		+ " WHERE Order_Id =" +orderId;
 			  ResultSet rs = stmt.executeQuery(sql2);
 			  while (rs.next()) {
 				Order_Line OrderIDResult = new Order_Line();
 			   //OrderIDResult.setOrder_ID(rs.getInt("Order_ID"));
 			   OrderIDResult.setProduct_Id(rs.getInt("Product_ID"));
 			   OrderIDResult.setQuantity(rs.getInt("Quantity"));
+			   OrderIDResult.setProduct_Name(rs.getString("Name"));
+			   OrderIDResult.setPorous_Status(rs.getString("Porous_Ware"));
 			  //System.out.println("Order_ID: " +  + ", Product_ID: " + product + ", Quantity: " + quantity);
 			   OrderResults.add(OrderIDResult);
 			  }
@@ -118,42 +125,5 @@ public  class MySQL {
 				  }
 			 return OrderResults;
 		 }
-			  /*
-			  //Update
-			  System.out.println("Creating statement...");
-			  stmt = conn.createStatement();
-			  String sql3 = "UPDATE Languages " + "SET date = 1994 WHERE id in (1, 2)";
-			  stmt.executeUpdate(sql3);
-
-			  //Delete
-			  System.out.println("Creating statement...");
-			  stmt = conn.createStatement();
-			  String sql4 = "DELETE FROM product " + "WHERE Product_ID = 15";
-			  stmt.executeUpdate(sql4);
-			 
-			  //Closing the connection
-			 } catch (SQLException sqle) {
-				 sqle.printStackTrace();
-				} catch (Exception e) {
-				 e.printStackTrace();
-				} finally {
-				 try {
-				  if (stmt != null)
-				   conn.close();
-				  } catch (SQLException se) { }
-				  try {
-				   if (conn != null)
-				    conn.close();
-				   } catch (SQLException se) {
-				    se.printStackTrace();
-				   }
-				  }
-				  System.out.println("Goodbye!");
-				  
-				
-*/
-
-	
-
-
+			  
 }

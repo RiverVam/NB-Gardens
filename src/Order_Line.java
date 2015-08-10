@@ -3,6 +3,8 @@ public class Order_Line {
 private int Order_ID;
 private int Product_Id;
 private int Quantity;
+private String Product_Name;
+private String Porous_Status;
 
 public int getOrder_ID() {
 	return Order_ID;
@@ -21,5 +23,17 @@ public int getQuantity() {
 }
 public void setQuantity(int quantity) {
 	Quantity = quantity;
+}
+public String getProduct_Name() {
+	return Product_Name;
+}
+public void setProduct_Name(String product_Name) {
+	Product_Name = product_Name;
+}
+public String getPorous_Status() {
+	return Porous_Status;
+}
+public void setPorous_Status(String porous_Status) {
+	Porous_Status = porous_Status;
 }
 }

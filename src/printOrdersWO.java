@@ -40,67 +40,22 @@ public class printOrdersWO extends JFrame {
 			listOfOrders = new ArrayList<Order>();
 			OrderResults = new ArrayList<Order_Line>();
 			
-		//	addItems();
+		
 			
 
 		}
-		/*
-	private void addItems(){
-		 item itemYellowGnome, itemBlueGnome, itemGreenGnome;
-		 itemYellowGnome = new item("Yellow Gnome, ");
-		  itemBlueGnome = new item("Blue Gnome, ");
-		  itemGreenGnome= new item( "Green Gnome, ");
-		  listOfItems = new ArrayList<item>();
-		  listOfItems.add(itemYellowGnome);
-		  listOfItems.add(itemBlueGnome);
-		  listOfItems.add(itemGreenGnome);
-		  
-		  listOfOrders = new ArrayList<Order>();
-		  Order newOrder = new Order(listOfOrders.size());
-		  newOrder.addItemToOrder(itemYellowGnome);
-		  newOrder.addItemToOrder(itemBlueGnome);
-		  newOrder.getOrderStatus();
-		  listOfOrders.add(newOrder);
-		  
-		 
-		  
-		  
-		  Order Order1 = new Order(listOfOrders.size());
-		  Order1.addItemToOrder(itemGreenGnome);
-		  Order1.addItemToOrder(itemBlueGnome);
-		  Order1.getOrderStatus();
-		  listOfOrders.add(Order1);
-		  
-		  
-		  
-		  //listOfOrders.add(new Order(listOfOrders.size()).addItemToOrder(itemYellowGnome));
-		  
-		  //loop that counts entries in the array of orders and prints out a list
-		  for (int i=0; i<listOfOrders.size(); i++){
-			  System.out.println("Order ID: "+listOfOrders.get(i).getOrderNumber());
-		  }
-		  for (int i=0; i<listOfOrders.size(); i++){
-		//WareHouse opperative selects 	  
-			  System.out.print("Enter Order Id to view: ");
-			  int userInput = input.nextInt();
-		  //put in for loop "j" to bring up list of items in the array
-		 for (int j=0; j<listOfOrders.get(userInput).getArraySize();j++){
-		  System.out.print( listOfOrders.get(userInput).getItemsOnOrder().get(j).getItemName()+"\n");
-		  System.out.print( listOfOrders.get(userInput).getOrderStatus());
-		  }
-	}
-}*/
+		
 	
 		 private void prepareGUI() {
 			 mainFrame = new JFrame("Warehouse IMS");
 			 mainFrame.setSize(500, 500);
 			 mainFrame.setLayout(new GridLayout(3, 1));
 			 headerLabel = new JLabel("", JLabel.CENTER);
-			// itemLabel = new JLabel("", JLabel.CENTER);
 			 itemTextArea = new JTextArea("");
 			 itemTextArea.setWrapStyleWord(true);
 			 itemTextArea.setLineWrap(true);
 			 itemTextArea.setSize(350, 200);
+			 //Changes the order from waiting to processing on button click
 			 orderStatusLabel = new JLabel("", JLabel.RIGHT);
 			 orderStatusLabel.setSize(100,100);
 			 mainFrame.addWindowListener(new WindowAdapter() {
@@ -146,9 +101,7 @@ public class printOrdersWO extends JFrame {
 						 
 				   }
 				  
-							// for (int j=0; j<listOfOrders.get(JButton.ChooseOrder).getArraySize();j++){
-							//	 statusLabel.setText( listOfOrders.get(ChooseOrder).getItemsOnOrder().get(j).getItemName()+"\n");
-							//	  }
+						
 				  
 			   break;
 			   
@@ -167,7 +120,7 @@ public class printOrdersWO extends JFrame {
 					 String output = "";
 					 OrderResults = MySQL.gettingOrders(orderId);
 					 for (int j=0; j<OrderResults.size();j++){
-						 output += "Prod"+OrderResults.get(j).getProduct_Id()+", Quant: "+OrderResults.get(j).getQuantity();
+						 output += "Product ID: "+OrderResults.get(j).getProduct_Id()+"Product Name:"+OrderResults.get(j).getProduct_Name()+", Porous Status: "+OrderResults.get(j).getPorous_Status()+", Quant: "+OrderResults.get(j).getQuantity()+", ";
 						 
 					 }
 					 itemTextArea.setText("Order Number: "+orderId+": "+output);
@@ -198,22 +151,6 @@ public class printOrdersWO extends JFrame {
 					 	}
 				 	}
 				 }
-			
-			 
-			 
-			 
-			
-				/*	  
-					  
-					  item itemYellowGnome, itemBlueGnome, itemGreenGnome;
-				 itemYellowGnome = new item(1, "Yellow Gnome", "Shelf 2", 20, " a bright yellow gnome");
-				  itemBlueGnome = new item(1, "Blue Gnome", "Shelf 1", 20, " a bright blue gnome");
-				  itemGreenGnome= new item(1, "Green Gnome", "Shelf 3", 20, " a bright green gnome");
-				  
-				  Orders Order1, Order2, Order3, Order4, order5;
-				  Order1 = new Orders(itemYellowGnome.getItemName());
-			
-			*/
 			
 			 
 }//end main
