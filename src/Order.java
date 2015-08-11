@@ -11,6 +11,13 @@ public class Order {
 
 		ArrayList<item> itemsOnOrder;
 
+		public Order(int orderNumber, String orderStatus){
+			//this.orderContents = orderContents;
+			this.orderNumber = orderNumber;
+			
+			itemsOnOrder = new ArrayList<item>();
+			
+		}
 		public Order(int orderNumber){
 			//this.orderContents = orderContents;
 			this.orderNumber = orderNumber;

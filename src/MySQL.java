@@ -71,19 +71,7 @@ public  class MySQL {
 			  Class.forName( JDBC_DRIVER);
 			  System.out.println("(5)Connecting to database...");
 			  conn = DriverManager.getConnection(DB_URL, USER, PASS);
-			 //Create
-			  /*
-			  System.out.println("Inserting records into the table...");
-			  stmt = conn.createStatement();
-			  String sql = "INSERT INTO product(Name,Price,Warehouse_Location) " + "VALUES ('Luxury Garden Furniture', '£1500', 'shelf 3')";
-			  System.out.print(sql);
-			  stmt.executeUpdate(sql);
-			  System.out.println("\nInserted records into the table...");
-*/
-
-			  //Read
-			  
-			 // ArrayList<Order_Line> OrderResults = new ArrayList<Order_Line>() ;
+			 
 			  
 			  System.out.println("(6)retreving products and quantity.");
 			  stmt = conn.createStatement();
@@ -102,7 +90,7 @@ public  class MySQL {
 			   OrderIDResult.setQuantity(rs.getInt("Quantity"));
 			   OrderIDResult.setProduct_Name(rs.getString("Name"));
 			   OrderIDResult.setPorous_Status(rs.getString("Porous_Ware"));
-			  //System.out.println("Order_ID: " +  + ", Product_ID: " + product + ", Quantity: " + quantity);
+			  
 			   OrderResults.add(OrderIDResult);
 			  }
 			  rs.close();
@@ -145,7 +133,7 @@ public  class MySQL {
 				item  item = new item(rs.getString("Name"));
 				
 			  
-			  // System.out.println("Order_ID: " + order + ", Product_ID: " + product + ", Quantity: " + quantity);
+			
 				listOfItems.add(item);
 			  }
 			  rs.close();
@@ -204,8 +192,52 @@ public  class MySQL {
 			  }
 			
 	 }
+		 public static ArrayList<Order> orderStatus(int orderId) {
+			 Connection conn = null;
+			 Statement stmt = null;
+			 System.out.println("(4)access db");
+			 ArrayList<Order> orderStatus = new ArrayList<Order>() ;
 		 
+			 try {
+				  Class.forName( JDBC_DRIVER);
+				  System.out.println("(5)Connecting to database...");
+				  conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				 
+				  
+				  System.out.println("(6)retreving products and quantity.");
+				  stmt = conn.createStatement();
+				  // SQl statement that links 2 tables and gets order info
+				  String sql2 = "SELECT Order_Status "
+				  		+ "FROM orders "	  
+				  		+ " WHERE Order_Id =" +orderId;
+				  ResultSet rs = stmt.executeQuery(sql2);
+				  while (rs.next()) {
+					Order OrderStatusResult = new Order( orderId,rs.getString("Order_Status") );
+				   
+				 
+				  
+				   orderStatus.add(OrderStatusResult);
+				  }
+				  rs.close();
+				  //return OrderResults;
+				  
+				 } catch (SQLException sqle) {
+					 sqle.printStackTrace();
+					} catch (Exception e) {
+					 e.printStackTrace();
+					} finally {
+					 try {
+					  if (stmt != null)
+					   conn.close();
+					  } catch (SQLException se) { }
+					  try {
+					   if (conn != null)
+					    conn.close();
+					   } catch (SQLException se) {
+					    se.printStackTrace();
+					   }
+					  }
+				 return orderStatus;
 		 
-		 
-		 
+		 }
 }

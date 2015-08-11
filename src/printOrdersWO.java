@@ -26,9 +26,9 @@ public class printOrdersWO extends JFrame {
 		 private JTextArea  itemTextArea;
 		 private JLabel orderStatusLabel;
 		 private JPanel controlPanel;
+		 ArrayList<Order> orderStatus;
 		 ArrayList<Order> listOfOrders ;
 		 ArrayList<Order_Line> OrderResults;
-		// ArrayList<Order> orderStatus;
 		 ArrayList<item> listOfItems;
 		
 		
@@ -40,7 +40,7 @@ public class printOrdersWO extends JFrame {
 			listOfOrders = new ArrayList<Order>();
 			OrderResults = new ArrayList<Order_Line>();
 			listOfItems = new ArrayList<item>();
-		
+			orderStatus = new ArrayList<Order>();
 			
 
 		}
@@ -134,8 +134,16 @@ public class printOrdersWO extends JFrame {
 			  	
 			  	case "Update Order Status":
 			  	
-			  		
-			  		
+			  		listOfOrders = MySQL.gettingOrderID();
+					  for (int i=0; i<listOfOrders.size(); i++) {
+						 //  statusLabel.setText("Order ID: "+listOfOrders.get(i).getOrderNumber());
+				  		
+						   JButton ChooseOrder = new  JButton("Order ID: "+listOfOrders.get(i).getOrderNumber()); 
+						   ChooseOrder.setActionCommand("Choose Order");
+						   ChooseOrder.addActionListener( new displayOrders(i));
+							 controlPanel.add(ChooseOrder);
+							 mainFrame.setVisible(true);
+					  }
 			  		break;
 			  	
 			  	case "Cancel":
@@ -197,7 +205,7 @@ public class printOrdersWO extends JFrame {
 			 
 			private class updateStockLevel implements ActionListener{
 				String name;
-				 private JTextArea enterQuantityNum ;
+				// private JTextArea enterQuantityNum ;
 				 public updateStockLevel(String name){
 					 this.name =name;
 				 }
@@ -226,6 +234,22 @@ public class printOrdersWO extends JFrame {
 					MySQL.updateProducts(name, Integer.valueOf(enterQuantityNum.getText()));
 				}
 			}
-			 
+			private class displayOrders implements ActionListener{
+				int orderId ;
+				 public displayOrders(int orderId){
+					 this.orderId =orderId+1;
+				 }
+				 @Override
+				 public void actionPerformed  (ActionEvent ae) {
+					 String output = "";
+					 orderStatus = MySQL.orderStatus(orderId);
+					 for (int j=0; j<orderStatus.size();j++){
+						 output += "-Order ID: "+orderId+"\n Order Status:"+orderStatus.get(j).getOrderStatus();
+						 
+						 itemTextArea.setText(output);
+					 }
+				 }
+				
+			}
 }//end BCL class
 	}//end class
