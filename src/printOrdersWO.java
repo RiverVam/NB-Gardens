@@ -259,7 +259,7 @@ public class printOrdersWO extends JFrame {
 				 private class statusProcessing implements ActionListener{
 						int orderId ;
 						 public statusProcessing(int orderId){
-							 this.orderId =orderId+1;
+							 this.orderId =orderId;
 						 }
 						 @Override
 						 public void actionPerformed  (ActionEvent ae) {
@@ -276,11 +276,11 @@ public class printOrdersWO extends JFrame {
 				 private class statusComplete implements ActionListener{
 						int orderId ;
 						 public statusComplete(int orderId){
-							 this.orderId =orderId+1;
+							 this.orderId =orderId;
 						 }
 						 @Override
 						 public void actionPerformed  (ActionEvent ae) {
-							 
+							 MySQL.updateStatusComplete(orderId);
 						 }
 				 }
 			}

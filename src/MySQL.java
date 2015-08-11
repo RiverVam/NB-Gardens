@@ -278,11 +278,14 @@ public  class MySQL {
 			   }
 			  }
 			
-	 }/*
-		 public static void updateStatusProcessing(int orderId){
+	 }
+		 public static void updateStatusComplete(int orderId){
 			 
 			 Connection conn = null;
 			 Statement stmt = null;
+			 Statement stmt1 = null;
+			 Statement stmt2 = null;
+			 
 			 System.out.println("(1)access db");
 			 
 			 try {
@@ -293,32 +296,80 @@ public  class MySQL {
 				  System.out.println("(3)Creating statement...");
 				  stmt = conn.createStatement();
 				  String sql3 = "UPDATE orders "
-				  		+ "SET Order_Status = 'Processing' "
+				  		+ "SET Order_Status = 'Complete' "
 				  		+ "WHERE Order_ID =  "+orderId;
 				 stmt.executeUpdate(sql3);
-		  
-		  
-		  
-		 } catch (SQLException sqle) {
-			 sqle.printStackTrace();
-			} catch (Exception e) {
-			 e.printStackTrace();
-			} finally {
+			 } catch (SQLException sqle) {
+				 sqle.printStackTrace();
+				} catch (Exception e) {
+				 e.printStackTrace();
+				} finally {
+				 try {
+				  if (stmt != null)
+				   conn.close();
+				  } catch (SQLException se) { }
+				  try {
+				   if (conn != null)
+				    conn.close();
+				   } catch (SQLException se) {
+				    se.printStackTrace();
+				   }
+				  }
 			 try {
-			  if (stmt != null)
-			   conn.close();
-			  } catch (SQLException se) { }
-			  try {
-			   if (conn != null)
-			    conn.close();
-			   } catch (SQLException se) {
-			    se.printStackTrace();
-			   }
-			  }
-			
-	 }
+				  Class.forName( JDBC_DRIVER);
+				  System.out.println("(2)Connecting to database...");
+				  conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				  
+				  System.out.println("(3)Creating statement...");
+				 ArrayList<Order_Line> OrderResults = new ArrayList<Order_Line>() ;
+				 stmt1 = conn.createStatement();
+				 String sql4 = "SELECT Product_ID, Quantity "
+					  		+ "FROM order_line "
+					  		+ "WHERE Order_ID =  "+orderId;
+				 ResultSet rs = stmt1.executeQuery(sql4);
+				  while (rs.next()) {
+					Order_Line OrderIDResult = new Order_Line();
+				   OrderIDResult.setProduct_Id(rs.getInt("Product_ID"));
+				   OrderIDResult.setQuantity(rs.getInt("Quantity"));
+				   OrderResults.add(OrderIDResult);
+				  }
+				 
+				//	  Class.forName( JDBC_DRIVER);
+				//	  System.out.println("(2)Connecting to database...");
+				//	  conn = DriverManager.getConnection(DB_URL, USER, PASS);
+					  
+					  System.out.println("(3)Creating statement...");
+					  
+					  for(Order_Line orders:OrderResults){
+				  stmt2 = conn.createStatement();
+				  String sql5 = "UPDATE product "
+					  		+ "SET Quantity = Quantity - "+String.valueOf(orders.getQuantity())
+					  		+ " WHERE Product_ID = "+String.valueOf(orders.getProduct_Id());
+				  
+				  stmt2.executeUpdate(sql5);
+					  }
+				  
+		  
+		  
+			} catch (SQLException sqle) {
+				 sqle.printStackTrace();
+				} catch (Exception e) {
+				 e.printStackTrace();
+				} finally {
+				 try {
+				  if (stmt != null)
+				   conn.close();
+				  } catch (SQLException se) { }
+				  try {
+				   if (conn != null)
+				    conn.close();
+				   } catch (SQLException se) {
+				    se.printStackTrace();
+				   }
+				  }
+				 
+		 }
 		 
-		 */
 		 
 		 
-}// end MySQL class
+			 }// end MySQL class
