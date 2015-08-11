@@ -126,7 +126,7 @@ public class printOrdersWO extends JFrame {
 			  		for (int i=000; i<listOfItems.size(); i++) {
 			  			JButton ChooseProduct = new  JButton(listOfItems.get(i).getItemName()); 
 			  			ChooseProduct.setActionCommand("Choose Product");
-			  			ChooseProduct.addActionListener( new updateStockLevel());
+			  			ChooseProduct.addActionListener( new updateStockLevel(listOfItems.get(i).getItemName()));
 							 controlPanel.add(ChooseProduct);
 							 mainFrame.setVisible(true);
 			  		}
@@ -140,14 +140,8 @@ public class printOrdersWO extends JFrame {
 			  	
 			  	case "Cancel":
 			  		
-						   //System.exit(0);
-			  		controlPanel = new JPanel();
-					 controlPanel.setLayout(new FlowLayout());
-					 mainFrame.add(headerLabel);
-					 mainFrame.add(controlPanel);
-					 mainFrame.add(itemTextArea);
-					 mainFrame.add(orderStatusLabel);
-					 mainFrame.setVisible(true);
+						  System.exit(0);
+			  		
 					 
 			  		break;
 			   
@@ -170,49 +164,66 @@ public class printOrdersWO extends JFrame {
 						 
 					 }
 					 itemTextArea.setText("Order Number: "+orderId+": "+output);
-					 
+					 /*
 					 for (int j=0; j<listOfOrders.get(orderId).getArraySize();j++){
 					 orderStatusLabel.setText("Order Status:"+listOfOrders.get(orderId).getOrderStatus());
 					 
-				 JButton ChangeOrderstatus = new JButton("Change Status to Processing");
-				 ChangeOrderstatus.setActionCommand("Change Status");
-				 ChangeOrderstatus.addActionListener( new changeStatus(j));
-					 controlPanel.add(ChangeOrderstatus);
+				 JButton ChangeOrderStatusP = new JButton("Change Status to Processing");
+				 JButton ChangeOrderStatusC = new JButton("Change Status to Completed");
+				 ChangeOrderStatusC.setActionCommand("Change Status");
+				 ChangeOrderStatusC.addActionListener( new changeStatusC(j));
+					 controlPanel.add(ChangeOrderStatusC);
+					 mainFrame.setVisible(true);
+				 
+				 ChangeOrderStatusP.setActionCommand("Change Status");
+				 ChangeOrderStatusP.addActionListener( new changeStatusP(j));
+					 controlPanel.add(ChangeOrderStatusP);
 					 mainFrame.setVisible(true);
 					 
-					 }
+					 }*/
 			 }
 			 
-				 private class changeStatus  implements ActionListener{
-					 int ChangeOrderstatus ;
-					 public changeStatus(int ChangeOrderstatus){
-						 this.ChangeOrderstatus =ChangeOrderstatus;
+			/*	 private class changeStatus  implements ActionListener{
+					 int ChangeOrderstatusP ;
+					 public changeStatus(int ChangeOrderstatusP){
+						 this.ChangeOrderstatusP =ChangeOrderstatusP;
 					 }
 					 	@Override
 					 	public void actionPerformed (ActionEvent ae) {
 					 		listOfOrders.get(orderId).setOrderStatus("processing") ;
 					 	}
-				 	}
+				 	}*/
 				 }//end printOrder
 			 
 			private class updateStockLevel implements ActionListener{
-				String productName;
-				//private JFrame UpdateFrame;
+				String name;
+				 private JTextArea enterQuantityNum ;
+				 public updateStockLevel(String name){
+					 this.name =name;
+				 }
 				
-				public updateStockLevel(){
-				this.productName =productName;
-				/*	UpdateFrame = new JFrame("Update IMS");
-					UpdateFrame.setSize(500, 500);
-					UpdateFrame.setLayout(new GridLayout(3, 1));
-					/*UpdateQuantityTextArea = new JTextArea("Enter New Quantity: ");
-					 UpdateQuantityTextArea.setWrapStyleWord(true);
-					 UpdateQuantityTextArea.setLineWrap(true);
-					 UpdateQuantityTextArea.setSize(100, 100);
-					 */
-					}
 				@Override
 				 public void actionPerformed  (ActionEvent ae) {
-					private JTextArea  UpdateQuantityTextArea;
+					JTextArea enterQuantityNum = new JTextArea("Delete me and enter update value");
+					enterQuantityNum.setSize(100, 100);
+					
+					JButton enterQuantity = new JButton("Update Quantity");
+					controlPanel.add(enterQuantity);
+					controlPanel.add(enterQuantityNum);
+					mainFrame.setVisible(true);
+					enterQuantity.addActionListener(new update(name, enterQuantityNum));
+				}
+			}
+			private class update implements ActionListener{
+				String name;
+				private JTextArea enterQuantityNum ;
+				public update(String name, JTextArea textArea){
+					this.name =name;
+					this.enterQuantityNum = textArea;
+				}
+				@Override
+				public void actionPerformed  (ActionEvent ae) {
+					MySQL.updateProducts(name, Integer.valueOf(enterQuantityNum.getText()));
 				}
 			}
 			 

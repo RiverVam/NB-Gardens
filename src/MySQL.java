@@ -168,4 +168,44 @@ public  class MySQL {
 				  }
 			  return listOfItems;
 		 }
+		 
+		 public static void updateProducts(String name, int Quantity){
+			 Connection conn = null;
+			 Statement stmt = null;
+			 System.out.println("(1)access db");
+			 
+			 try {
+				  Class.forName( JDBC_DRIVER);
+				  System.out.println("(2)Connecting to database...");
+				  conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				  
+				  System.out.println("(3)Creating statement..."+String.valueOf(Quantity)+""+name);
+				  stmt = conn.createStatement();
+				  String sql3 = "UPDATE product SET Quantity = Quantity + "+String.valueOf(Quantity)+" WHERE Name = '"+name+"'";
+				 stmt.executeUpdate(sql3);
+		  
+		  
+		  
+		 } catch (SQLException sqle) {
+			 sqle.printStackTrace();
+			} catch (Exception e) {
+			 e.printStackTrace();
+			} finally {
+			 try {
+			  if (stmt != null)
+			   conn.close();
+			  } catch (SQLException se) { }
+			  try {
+			   if (conn != null)
+			    conn.close();
+			   } catch (SQLException se) {
+			    se.printStackTrace();
+			   }
+			  }
+			
+	 }
+		 
+		 
+		 
+		 
 }
