@@ -212,9 +212,9 @@ public  class MySQL {
 				  		+ " WHERE Order_Id =" +orderId;
 				  ResultSet rs = stmt.executeQuery(sql2);
 				  while (rs.next()) {
-					Order OrderStatusResult = new Order( orderId,rs.getString("Order_Status") );
+					Order OrderStatusResult = new Order( orderId, rs.getString("Order_Status") );
 				   
-				 
+					//OrderStatusResult.setOrderStatus.rs.getString("Order_Status");
 				  
 				   orderStatus.add(OrderStatusResult);
 				  }
@@ -239,5 +239,86 @@ public  class MySQL {
 					  }
 				 return orderStatus;
 		 
-		 }
-}
+		 }//end orderStatus
+		 
+		 public static void updateStatusProcessing(int orderId){
+			 
+			 Connection conn = null;
+			 Statement stmt = null;
+			 System.out.println("(1)access db");
+			 
+			 try {
+				  Class.forName( JDBC_DRIVER);
+				  System.out.println("(2)Connecting to database...");
+				  conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				  
+				  System.out.println("(3)Creating statement...");
+				  stmt = conn.createStatement();
+				  String sql3 = "UPDATE orders "
+				  		+ "SET Order_Status = 'Processing' "
+				  		+ "WHERE Order_ID =  "+orderId+"-1";
+				 stmt.executeUpdate(sql3);
+		  
+		  
+		  
+		 } catch (SQLException sqle) {
+			 sqle.printStackTrace();
+			} catch (Exception e) {
+			 e.printStackTrace();
+			} finally {
+			 try {
+			  if (stmt != null)
+			   conn.close();
+			  } catch (SQLException se) { }
+			  try {
+			   if (conn != null)
+			    conn.close();
+			   } catch (SQLException se) {
+			    se.printStackTrace();
+			   }
+			  }
+			
+	 }/*
+		 public static void updateStatusProcessing(int orderId){
+			 
+			 Connection conn = null;
+			 Statement stmt = null;
+			 System.out.println("(1)access db");
+			 
+			 try {
+				  Class.forName( JDBC_DRIVER);
+				  System.out.println("(2)Connecting to database...");
+				  conn = DriverManager.getConnection(DB_URL, USER, PASS);
+				  
+				  System.out.println("(3)Creating statement...");
+				  stmt = conn.createStatement();
+				  String sql3 = "UPDATE orders "
+				  		+ "SET Order_Status = 'Processing' "
+				  		+ "WHERE Order_ID =  "+orderId;
+				 stmt.executeUpdate(sql3);
+		  
+		  
+		  
+		 } catch (SQLException sqle) {
+			 sqle.printStackTrace();
+			} catch (Exception e) {
+			 e.printStackTrace();
+			} finally {
+			 try {
+			  if (stmt != null)
+			   conn.close();
+			  } catch (SQLException se) { }
+			  try {
+			   if (conn != null)
+			    conn.close();
+			   } catch (SQLException se) {
+			    se.printStackTrace();
+			   }
+			  }
+			
+	 }
+		 
+		 */
+		 
+		 
+}// end MySQL class

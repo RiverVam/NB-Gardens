@@ -5,7 +5,7 @@ public class Order {
 
 	
 		private int orderNumber;
-		String orderStatus = "Waiting";
+		String orderStatus ;
 		
 	//	String orderContents ;
 
@@ -14,7 +14,7 @@ public class Order {
 		public Order(int orderNumber, String orderStatus){
 			//this.orderContents = orderContents;
 			this.orderNumber = orderNumber;
-			
+			this.orderStatus = orderStatus;
 			itemsOnOrder = new ArrayList<item>();
 			
 		}

@@ -247,9 +247,42 @@ public class printOrdersWO extends JFrame {
 						 output += "-Order ID: "+orderId+"\n Order Status:"+orderStatus.get(j).getOrderStatus();
 						 
 						 itemTextArea.setText(output);
+						 JButton statusProcessing = new JButton("Change Status to Processing");
+						 JButton statusComplete = new JButton("Change Status to Complete");
+							controlPanel.add(statusProcessing);
+							controlPanel.add(statusComplete);
+							mainFrame.setVisible(true);
+							statusProcessing.addActionListener(new statusProcessing(orderId));
+							statusComplete.addActionListener(new statusComplete(orderId));
 					 }
 				 }
-				
+				 private class statusProcessing implements ActionListener{
+						int orderId ;
+						 public statusProcessing(int orderId){
+							 this.orderId =orderId+1;
+						 }
+						 @Override
+						 public void actionPerformed  (ActionEvent ae) {
+							 MySQL.updateStatusProcessing(orderId);
+							 String output = "";
+							 orderStatus = MySQL.orderStatus(orderId);
+							 for (int j=0; j<orderStatus.size();j++){
+								 output += "-Order ID: "+orderId+"\n Order Status:"+orderStatus.get(j).getOrderStatus();
+								 
+								 itemTextArea.setText(output);
+							 }
+						 }
+				 }
+				 private class statusComplete implements ActionListener{
+						int orderId ;
+						 public statusComplete(int orderId){
+							 this.orderId =orderId+1;
+						 }
+						 @Override
+						 public void actionPerformed  (ActionEvent ae) {
+							 
+						 }
+				 }
 			}
 }//end BCL class
 	}//end class
