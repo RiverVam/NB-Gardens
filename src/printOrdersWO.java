@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 
@@ -24,7 +26,7 @@ public class printOrdersWO extends JFrame {
 		 private JFrame mainFrame;
 		 private JLabel headerLabel;
 		 private JTextArea  itemTextArea;
-		 private JLabel orderStatusLabel;
+		// private JLabel orderStatusLabel;
 		 private JPanel controlPanel;
 		 ArrayList<Order> orderStatus;
 		 ArrayList<Order> listOfOrders ;
@@ -53,24 +55,27 @@ public class printOrdersWO extends JFrame {
 			 headerLabel = new JLabel("", JLabel.CENTER);
 			 itemTextArea = new JTextArea("");
 			 
+			 JScrollPane scrollPane = new JScrollPane( itemTextArea );
+			 scrollPane.setPreferredSize(new Dimension(350,200));;
 			 itemTextArea.setWrapStyleWord(true);
 			 itemTextArea.setLineWrap(true);
-			 itemTextArea.setSize(350, 400);
-			 
+			 itemTextArea.setSize(350, 200);
 			 //Changes the order from waiting to processing on button click
-			 orderStatusLabel = new JLabel("sbgfjksdbkgj", JLabel.RIGHT);
-			 orderStatusLabel.setSize(100,100);
+			// orderStatusLabel = new JLabel("sbgfjksdbkgj", JLabel.RIGHT);
+			// orderStatusLabel.setSize(100,100);
 			 mainFrame.addWindowListener(new WindowAdapter() {
 				  public void windowClosing(WindowEvent windowEvent)     {
 				   System.exit(0);
 				  }
 				});
 				 controlPanel = new JPanel();
+				
 				 controlPanel.setLayout(new FlowLayout());
 				 mainFrame.add(headerLabel);
 				 mainFrame.add(controlPanel);
-				 mainFrame.add(itemTextArea);
-				 mainFrame.add(orderStatusLabel);
+				 //mainFrame.add(itemTextArea);
+				// mainFrame.add(orderStatusLabel);
+				 controlPanel.add( scrollPane );
 				 mainFrame.setVisible(true);
 		 }
 		 private void showEvent() {
@@ -79,6 +84,7 @@ public class printOrdersWO extends JFrame {
 			 JButton UpdateStock =new JButton("Update Stock Levels");
 			 JButton UpdateOrderStatus = new JButton("Update Order Status");
 			 JButton Cancel =new JButton("Cancel");
+			 
 			 
 			 ShowOrders.setActionCommand("Show Orders");
 			 UpdateStock.setActionCommand("Update Stock Levels");
