@@ -5,7 +5,13 @@ private int Product_Id;
 private int Quantity;
 private String Product_Name;
 private String Porous_Status;
+//private int Product_LocationX;
+//private int Product_LocationY;
+private ProductLocationTSP location;
 
+Order_Line(){
+	location= new ProductLocationTSP(0,0);
+}
 public int getOrder_ID() {
 	return Order_ID;
 }
@@ -35,5 +41,29 @@ public String getPorous_Status() {
 }
 public void setPorous_Status(String porous_Status) {
 	Porous_Status = porous_Status;
+}
+public int getProduct_LocationX() {
+	return location.getX();
+}
+
+
+public void setProduct_LocationX(int product_LocationX) {
+	location.setX(product_LocationX);
+}
+
+
+public int getProduct_LocationY() {
+	return location.getY();
+}
+
+
+public void setProduct_LocationY(int product_LocationY) {
+	location.setY(product_LocationY);
+}
+public ProductLocationTSP getLocation() {
+	return location;
+}
+public void setLocation(ProductLocationTSP location) {
+	this.location = location;
 }
 }

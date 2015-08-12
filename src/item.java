@@ -5,6 +5,7 @@ public class item {
  private String ProductName ;
  private int Product_ID;
  private int Product_Quantity;
+
  public item(String itemName) {
 		
 		this.ProductName = itemName;
@@ -50,5 +51,8 @@ public int getProduct_Quantity() {
 public void setProduct_Quantity(int product_Quantity) {
 	Product_Quantity = product_Quantity;
 }
+
+
+
 }
 

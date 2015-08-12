@@ -76,7 +76,7 @@ public  class MySQL {
 			  System.out.println("(6)retreving products and quantity.");
 			  stmt = conn.createStatement();
 			  // SQl statement that links 2 tables and gets order info
-			  String sql2 = "SELECT p.Product_ID, p.Name,  ol.Product_ID, ol.Quantity, ol.Porous_Ware "
+			  String sql2 = "SELECT p.Product_ID, p.Name, p.Warehouse_Location_x, p.Warehouse_Location_y,  ol.Product_ID, ol.Quantity, ol.Porous_Ware "
 			  		+ "FROM product p "
 			  		+ "JOIN order_line ol "
 			  		//uses the foreign key to link the two tables in the database
@@ -90,7 +90,8 @@ public  class MySQL {
 			   OrderIDResult.setQuantity(rs.getInt("Quantity"));
 			   OrderIDResult.setProduct_Name(rs.getString("Name"));
 			   OrderIDResult.setPorous_Status(rs.getString("Porous_Ware"));
-			  
+			   OrderIDResult.setProduct_LocationX(rs.getInt("Warehouse_Location_x"));
+			   OrderIDResult.setProduct_LocationY(rs.getInt("Warehouse_Location_y"));
 			   OrderResults.add(OrderIDResult);
 			  }
 			  rs.close();
@@ -334,10 +335,7 @@ public  class MySQL {
 				   OrderResults.add(OrderIDResult);
 				  }
 				 
-				//	  Class.forName( JDBC_DRIVER);
-				//	  System.out.println("(2)Connecting to database...");
-				//	  conn = DriverManager.getConnection(DB_URL, USER, PASS);
-					  
+				
 					  System.out.println("(3)Creating statement...");
 					  
 					  for(Order_Line orders:OrderResults){

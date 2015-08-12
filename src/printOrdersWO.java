@@ -52,9 +52,10 @@ public class printOrdersWO extends JFrame {
 			 mainFrame.setLayout(new GridLayout(3, 1));
 			 headerLabel = new JLabel("", JLabel.CENTER);
 			 itemTextArea = new JTextArea("");
+			 
 			 itemTextArea.setWrapStyleWord(true);
 			 itemTextArea.setLineWrap(true);
-			 itemTextArea.setSize(350, 200);
+			 itemTextArea.setSize(350, 400);
 			 
 			 //Changes the order from waiting to processing on button click
 			 orderStatusLabel = new JLabel("sbgfjksdbkgj", JLabel.RIGHT);
@@ -166,12 +167,54 @@ public class printOrdersWO extends JFrame {
 				 @Override
 				 public void actionPerformed  (ActionEvent ae) {
 					 String output = "";
+					 String output2 = "";
 					 OrderResults = MySQL.gettingOrders(orderId);
 					 for (int j=0; j<OrderResults.size();j++){
-						 output += "\n-Product ID: "+OrderResults.get(j).getProduct_Id()+"\nProduct Name:"+OrderResults.get(j).getProduct_Name()+", \nPorous Status: "+OrderResults.get(j).getPorous_Status()+", \nQuant: "+OrderResults.get(j).getQuantity()+", \n";
+						 output += "\n-Product ID: "+OrderResults.get(j).getProduct_Id()+"\nProduct Name:"+OrderResults.get(j).getProduct_Name()+", \nPorous Status: "+OrderResults.get(j).getPorous_Status()+", \nQuantity: "+OrderResults.get(j).getQuantity()+", \nWarehouse Location: ("+OrderResults.get(j).getProduct_LocationX()+","+OrderResults.get(j).getProduct_LocationY()+")\n";
+						
+						}
+					 ArrayList<Order_Line> ProductsCollected = new ArrayList<Order_Line>();
+						ArrayList<Order_Line> ProductsNotCollected = new ArrayList<Order_Line>();
+						ProductsNotCollected = OrderResults;
+						double currentDist;
+						double PreviousBest = Integer.MAX_VALUE;	
+						int index =0;
+						Order_Line currentOrderLine;
+						//set the start point as the closest point
+						for (int i=0; i<ProductsNotCollected.size();i++){
+							//call the function to find the distance
+							currentDist = ProductsNotCollected.get(i).getLocation().distanceTo(new ProductLocationTSP(0,0)) ;
+							//compare distance......current will always be more favourable here
+							if(currentDist < PreviousBest){
+								index = i;
+								PreviousBest = currentDist;
+							}
+						}
+						
+						while (ProductsNotCollected.size() !=0){
+							currentOrderLine = ProductsNotCollected.get(index);
+							ProductsNotCollected.remove(index);
+							ProductsCollected.add(currentOrderLine);
+							PreviousBest = Integer.MAX_VALUE;
+								for (int i=0; i<ProductsNotCollected.size();i++){
+									
+									currentDist = currentOrderLine.getLocation().distanceTo(ProductsNotCollected.get(i).getLocation());
+									 
+									if(currentDist < PreviousBest){
+										index = i;
+										PreviousBest = currentDist;
+									}
+								}
+								OrderResults = ProductsCollected;
 						 
-					 }
-					 itemTextArea.setText("Order Number: "+orderId+": "+output);
+						
+						 
+							}
+						for (int i=0; i<ProductsCollected.size();i++){
+							output2 += "("+ProductsCollected.get(i).getLocation().getX()+", "+ProductsCollected.get(i).getLocation().getY()+")";
+						}
+					 
+					 itemTextArea.setText("Order Number: "+orderId+": "+output+"\n"+output2);
 					 /*
 					 for (int j=0; j<listOfOrders.get(orderId).getArraySize();j++){
 					 orderStatusLabel.setText("Order Status:"+listOfOrders.get(orderId).getOrderStatus());
