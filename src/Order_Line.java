@@ -5,8 +5,6 @@ private int Product_Id;
 private int Quantity;
 private String Product_Name;
 private String Porous_Status;
-//private int Product_LocationX;
-//private int Product_LocationY;
 private ProductLocationTSP location;
 
 Order_Line(){

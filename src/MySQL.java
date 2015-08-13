@@ -14,7 +14,7 @@ public  class MySQL {
 	 static final String USER = "root";
 	 static final String PASS = "netbuilder";
 	
-
+	 	//gets the orders Id's from the database and populates the array with them  
 	 	public static ArrayList<Order> gettingOrderID(){
 	 		Connection conn = null;
 			 Statement stmt = null;
@@ -24,18 +24,12 @@ public  class MySQL {
 			  Class.forName( JDBC_DRIVER);
 			  System.out.println("(2)Connecting to database...");
 			  conn = DriverManager.getConnection(DB_URL, USER, PASS);
-			  
-			 // ArrayList<Order> listOfOrders = new ArrayList<Order>() ;
-			  
-			  System.out.println("(3)Creating statement...");
+			   System.out.println("(3)Creating statement...");
 			  stmt = conn.createStatement();
 			  String sql2 = "SELECT Order_ID FROM orders";
 			  ResultSet rs = stmt.executeQuery(sql2);
 			  while (rs.next()) {
 				Order  order = new Order(rs.getInt("Order_ID"));
-				
-			  
-			  // System.out.println("Order_ID: " + order + ", Product_ID: " + product + ", Quantity: " + quantity);
 				listOfOrders.add(order);
 			  }
 			  rs.close();
@@ -61,7 +55,7 @@ public  class MySQL {
 		 }// end public static ArrayList<Order> gettingOrderID()
 			  
 	 	
-	 
+	 	//gets the orders Id's from the database and populates the array with them
 		 public static ArrayList<Order_Line> gettingOrders(int orderId) {
 			 Connection conn = null;
 			 Statement stmt = null;
@@ -84,8 +78,7 @@ public  class MySQL {
 			  		+ " WHERE Order_Id =" +orderId;
 			  ResultSet rs = stmt.executeQuery(sql2);
 			  while (rs.next()) {
-				Order_Line OrderIDResult = new Order_Line();
-			   //OrderIDResult.setOrder_ID(rs.getInt("Order_ID"));
+			   Order_Line OrderIDResult = new Order_Line();
 			   OrderIDResult.setProduct_Id(rs.getInt("Product_ID"));
 			   OrderIDResult.setQuantity(rs.getInt("Quantity"));
 			   OrderIDResult.setProduct_Name(rs.getString("Name"));
@@ -116,6 +109,7 @@ public  class MySQL {
 			 return OrderResults;
 		 }//End ArrayList<Order_Line> gettingOrders(int orderId)
 		 
+		 // populates the arrayList with the names of the products 
 		 public static ArrayList<item> gettingProducts(){
 			 Connection conn = null;
 			 Statement stmt = null;
@@ -157,7 +151,7 @@ public  class MySQL {
 				  }
 			  return listOfItems;
 		 }
-		 
+		 // updates the stock levels of the products using the product name and quantity entered
 		 public static void updateProducts(String name, int Quantity){
 			 Connection conn = null;
 			 Statement stmt = null;
@@ -193,6 +187,7 @@ public  class MySQL {
 			  }
 			
 	 }
+		 // uses the order ID to select order status and pupulate the array orderStatus 
 		 public static ArrayList<Order> orderStatus(int orderId) {
 			 Connection conn = null;
 			 Statement stmt = null;
@@ -215,12 +210,12 @@ public  class MySQL {
 				  while (rs.next()) {
 					Order OrderStatusResult = new Order( orderId, rs.getString("Order_Status") );
 				   
-					//OrderStatusResult.setOrderStatus.rs.getString("Order_Status");
+					
 				  
 				   orderStatus.add(OrderStatusResult);
 				  }
 				  rs.close();
-				  //return OrderResults;
+				  
 				  
 				 } catch (SQLException sqle) {
 					 sqle.printStackTrace();
@@ -242,6 +237,7 @@ public  class MySQL {
 		 
 		 }//end orderStatus
 		 
+		 //uses the order id to update the order status in the database 
 		 public static void updateStatusProcessing(int orderId){
 			 
 			 Connection conn = null;
@@ -277,9 +273,10 @@ public  class MySQL {
 			   } catch (SQLException se) {
 			    se.printStackTrace();
 			   }
-			  }
+			  }// end updateStatusProcessing()
 			
 	 }
+		//uses the order id to update the order status and the stock level in the database 
 		 public static void updateStatusComplete(int orderId){
 			 
 			 Connection conn = null;
@@ -366,7 +363,7 @@ public  class MySQL {
 				   }
 				  }
 				 
-		 }
+		 }//end updateStatusComplete()
 		 
 		 
 		 

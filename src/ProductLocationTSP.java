@@ -27,22 +27,7 @@ public class ProductLocationTSP {
 		this.y = y;
 	}
 		
-	/*
-	// Adds a destination location
-    public static void addProductLocationTSP(ProductLocationTSP location) {
-    	ProductsCollected.add(location);
-    }
-    
-    // Get a location
-    public static ProductLocationTSP getProductLocationTSP(int index){
-        return (ProductLocationTSP)ProductsCollected.get(index);
-    }
-    
-    // Get the number of destination locations
-    public static int numberOfProductLocations(){
-        return ProductsCollected.size();
-    }*/
-
+	
 	//finds the distance to the product location
 	public double distanceTo(ProductLocationTSP location){
 		int xDistance = Math.abs(getX() - location.getX());
@@ -52,9 +37,6 @@ public class ProductLocationTSP {
         return distance;
 	}
 		
-	@Override
-    public String toString(){
-        return getX()+", "+getY();
-    }
+	
 	
 }//end ProductLocationTSP class

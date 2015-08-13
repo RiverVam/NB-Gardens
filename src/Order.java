@@ -7,31 +7,28 @@ public class Order {
 		private int orderNumber;
 		String orderStatus ;
 		
-	//	String orderContents ;
 
 		ArrayList<item> itemsOnOrder;
 
 		public Order(int orderNumber, String orderStatus){
-			//this.orderContents = orderContents;
+			
 			this.orderNumber = orderNumber;
 			this.orderStatus = orderStatus;
 			itemsOnOrder = new ArrayList<item>();
 			
 		}
 		public Order(int orderNumber){
-			//this.orderContents = orderContents;
+			
 			this.orderNumber = orderNumber;
 			
 			itemsOnOrder = new ArrayList<item>();
 			
 		}
-//		public void addOrderStatus(Order orderStatus){
-//			orderStatus.add(orderStatus);
-//		}
+
 		
 		public void addItemToOrder(item newItem){
 			itemsOnOrder.add(newItem);
-			//System.out.println("name of item " +newItem.getItemName());
+			
 		}
 	
 	
@@ -65,18 +62,7 @@ public class Order {
 			this.orderStatus = orderStatus;
 	}
 		
-/* 		
 
-		public String getOrderContents() {
-			return orderContents;
-		}
-
-
-
-		public void setOrderContents(String orderContents) {
-			this.orderContents = orderContents;
-		}
-		*/
 }
 
 
